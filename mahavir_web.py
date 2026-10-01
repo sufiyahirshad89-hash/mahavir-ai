@@ -1,11 +1,12 @@
 import streamlit as st
 import urllib.request
 import json
+import urllib.parse
 
 # --- Premium Black Mobile-Friendly Web Configuration ---
 st.set_page_config(page_title="Mahavir AI Console", page_icon="🦾", layout="centered")
 
-# Custom CSS for modern dark-mode appearance (Exactly like your layout image)
+# Custom CSS for modern dark-mode appearance
 st.markdown("""
     <style>
     .stApp { background-color: #09090b; color: #f4f4f5; }
@@ -23,7 +24,7 @@ st.subheader("What can I help with today?")
 if "messages" not in st.session_state:
     st.session_state.messages = [{"role": "assistant", "content": "Mahavir AI: Cloud Engine Online. Ready for Android and Web users, Master."}]
 
-# File Attachment component on web layout
+# CORRECTED: Standard Streamlit file uploader framework component
 attached_file = st.file_uploader("Upload Image or Document (Optional)", type=["pdf", "png", "jpg", "jpeg", "txt"])
 
 # Display ongoing chat history logs on screen
@@ -49,11 +50,9 @@ if user_input:
     else:
         # FREE PUBLIC CLOUD SERVER ROUTING (Works 24/7 without your PC being on!)
         try:
-            # We use a globally available open-source public model endpoint api
             url = "https://pollinations.ai"
             full_prompt = f"System: Act as Mahavir AI, a helpful coding and text assistant. User prompt: {user_input} {file_tag}. Answer short and clear."
             
-            # Direct text query payload web request
             encoded_prompt = urllib.parse.quote(full_prompt)
             req = urllib.request.Request(f"{url}{encoded_prompt}", headers={'User-Agent': 'Mozilla/5.0'})
             
